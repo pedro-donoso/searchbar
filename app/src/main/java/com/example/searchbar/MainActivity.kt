@@ -14,6 +14,10 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,14 +36,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    var query by remember { mutableStateOf("") }
+                    var active by remember { mutableStateOf(false) }
+
                     SearchBar(
-                        query = "Search",
-                        onQueryChange = {},
+                        query = query,
+                        onQueryChange = { query = it },
                         onSearch = {
                             Toast.makeText(ctx, "Search", Toast.LENGTH_SHORT).show()
                         },
-                        active = true,
-                        onActiveChange = {}
+                        active = active,
+                        onActiveChange = { active = it }
                     ){
 
                     }
