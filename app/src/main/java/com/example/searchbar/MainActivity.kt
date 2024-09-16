@@ -43,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         query = query,
                         onQueryChange = { query = it },
                         onSearch = {
-                            Toast.makeText(ctx, "Search", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(ctx, query, Toast.LENGTH_SHORT).show()
+                            active = false
                         },
                         active = active,
                         onActiveChange = { active = it }
