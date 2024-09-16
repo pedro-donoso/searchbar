@@ -4,264 +4,255 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import com.example.searchbar.ui.theme.SearchbarTheme
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-// clase principal
+data class Country(val name: String, val code: String)
+
 class MainActivity : ComponentActivity() {
-    // funcion principal
-    @OptIn(ExperimentalMaterial3Api::class)
-    // creacion de la interfaz
     override fun onCreate(savedInstanceState: Bundle?) {
-        // funcion para crear la interfaz
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            // tema de la interfaz
-            SearchbarTheme {
-                // superficie de la interfaz
-                val ctx = LocalContext.current
-                Surface(
-                    // tamaño de la superficie
-                    modifier = Modifier.fillMaxSize(),
-                    // color de la superficie
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    // barra de busqueda
-                    var query by remember { mutableStateOf("") }
-                    // estado de la barra de busqueda
-                    var active by remember { mutableStateOf(false) }
-
-                    // interfaz de la barra de busqueda
-                    SearchBar(
-                        // modificadores de la barra de busqueda
-                        query = query,
-                        onQueryChange = { query = it },
-                        onSearch = {
-                            Toast.makeText(ctx, query, Toast.LENGTH_SHORT).show()
-                            active = false
-                        },
-                        active = active,
-                        onActiveChange = { active = it }
-                    ) {
-                        /* List of name of the countries in the world order alphabetically.
-                         */
-
-                        val countries = listOf(
-                            "Afghanistan",
-                            "Albania",
-                            "Algeria",
-                            "Andorra",
-                            "Angola",
-                            "Antigua and Barbuda",
-                            "Argentina",
-                            "Ar menia",
-                            "Australia",
-                            "Austria",
-                            "Azerbaijan",
-                            "Bahamas",
-                            "Bahrain",
-                            "Bangladesh",
-                            "Barbados",
-                            "Belarus",
-                            "Belgium",
-                            "Belize",
-                            "Benin",
-                            "Bhutan",
-                            "Bolivia",
-                            "Bosnia and Herzegovina",
-                            "Botswana",
-                            "Brazil",
-                            "Brunei",
-                            "Bulgaria",
-                            "Burkina Faso",
-                            "Burundi",
-                            "Cambodia",
-                            "Cameroon",
-                            "Canada",
-                            "Central African Republic",
-                            "Chad",
-                            "Chile",
-                            "China",
-                            "Colombia",
-                            "Comoros",
-                            "Congo (Congo-Brazzaville)",
-                            "Costa Rica",
-                            "Croatia",
-                            "Cuba",
-                            "Cyprus",
-                            "Czechia (Czech Republic)",
-                            "Democratic Republic of the Congo",
-                            "Denmark",
-                            "Djibouti",
-                            "Dominica",
-                            "Dominican Republic",
-                            "Ecuador",
-                            "Egypt",
-                            "El Salvador",
-                            "Equatorial Guinea",
-                            "Eritrea",
-                            "Estonia",
-                            "Ethiopia",
-                            "Fiji",
-                            "Finland",
-                            "France",
-                            "Gabon",
-                            "Gambia",
-                            "Georgia",
-                            "Germany",
-                            "Ghana",
-                            "Greece",
-                            "Greenland",
-                            "Grenada",
-                            "Guatemala",
-                            "Guinea",
-                            "Guinea-Bissau",
-                            "Guyana",
-                            "Haiti",
-                            "Honduras",
-                            "Hong Kong",
-                            "Hungary",
-                            "Iceland",
-                            "India",
-                            "Indonesia",
-                            "Iran",
-                            "Iraq",
-                            "Ireland",
-                            "Israel",
-                            "Italy",
-                            "Jamaica",
-                            "Japan",
-                            "Jordan",
-                            "Kazakhstan",
-                            "Kenya",
-                            "Kiribati",
-                            "North Korea",
-                            "South Korea",
-                            "Kosovo",
-                            "Kuwait",
-                            "Kyrgyzstan",
-                            "Laos",
-                            "Latvia",
-                            "Lebanon",
-                            "Lesotho",
-                            "Liberia",
-                            "Libya",
-                            "Liechtenstein",
-                            "Lithuania",
-                            "Luxembourg",
-                            "Macedonia",
-                            "Madagascar",
-                            "Malawi",
-                            "Malaysia",
-                            "Maldives",
-                            "Mali",
-                            "Malta",
-                            "Marshall Islands",
-                            "Mauritania",
-                            "Mauritius",
-                            "Mexico",
-                            "Micronesia",
-                            "Moldova",
-                            "Monaco",
-                            "Mongolia",
-                            "Montenegro",
-                            "Morocco",
-                            "Mozambique",
-                            "Myanmar",
-                            "Namibia",
-                            "Nauru",
-                            "Nepal",
-                            "Netherlands",
-                            "New Zealand",
-                            "Nicaragua",
-                            "Niger",
-                            "Nigeria",
-                            "Northern Mariana Islands",
-                            "Norway",
-                            "Oman",
-                            "Pakistan",
-                            "Palau",
-                            "Palestine, State of",
-                            "Panama",
-                            "Papua New Guinea",
-                            "Paraguay",
-                            "Peru",
-                            "Philippines",
-                            "Poland",
-                            "Portugal",
-                            "Puerto Rico",
-                            "Qatar",
-                            "Romania",
-                            "Russia",
-                            "Rwanda",
-                            "Saint Kitts and Nevis",
-                            "Saint Lucia",
-                            "Saint Vincent and the Grenadines",
-                            "Samoa",
-                            "San Marino",
-                            "Sao Tome and Principe",
-                            "Saudi Arabia",
-                            "Senegal",
-                            "Serbia",
-                            "Seychelles",
-                            "Sierra Leone",
-                            "Singapore",
-                            "Sint Maarten",
-                            "Slovakia",
-                            "Slovenia",
-                            "Solomon Islands",
-                            "Somalia",
-                            "South Africa",
-                            "Spain",
-                            "Sri Lanka",
-                            "Sudan",
-                            "Sudan, South",
-                            "Suriname",
-                            "Swaziland",
-                            "Sweden",
-                            "Switzerland",
-                            "Syria",
-                            "Taiwan",
-                            "Tajikistan",
-                            "Tanzania",
-                            "Thailand",
-                            "Togo",
-                            "Tonga",
-                            "Trinidad and Tobago",
-                            "Tunisia",
-                            "Turkey",
-                            "Turkmenistan",
-                            "Tuvalu",
-                            "Uganda",
-                            "Ukraine",
-                            "United Arab Emirates",
-                            "United Kingdom",
-                            "United States of America",
-                            "Uruguay",
-                            "Uzbekistan",
-                            "Vanuatu",
-                            "Venezuela",
-                            "Vietnam",
-                            "Yemen",
-                            "Zambia",
-                            "Zimbabwe"
-                        )
-                    }
-                }
-            }
+            SearchBar()
         }
     }
 }
 
+@Composable
+fun SearchBar() {
+    val query = remember { mutableStateOf("") }
+    val countries = listOf(
+        Country("Afghanistan", "AFG"),
+        Country("Albania", "ALB"),
+        Country("Algeria", "DZA"),
+        Country("Andorra", "AND"),
+        Country("Angola", "AGO"),
+        Country("Antigua and Barbuda", "ATG"),
+        Country("Argentina", "ARG"),
+        Country("Armenia", "ARM"),
+        Country("Australia", "AUS"),
+        Country("Austria", "AUT"),
+        Country("Azerbaijan", "AZE"),
+        Country("Bahamas", "BHS"),
+        Country("Bahrain", "BHR"),
+        Country("Bangladesh", "BGD"),
+        Country("Barbados", "BRB"),
+        Country("Belarus", "BLR"),
+        Country("Belgium", "BEL"),
+        Country("Belize", "BLZ"),
+        Country("Benin", "BEN"),
+        Country("Bhutan", "BTN"),
+        Country("Bolivia", "BOL"),
+        Country("Bosnia and Herzegovina", "BIH"),
+        Country("Botswana", "BWA"),
+        Country("Brazil", "BRA"),
+        Country("Brunei", "BRN"),
+        Country("Bulgaria", "BGR"),
+        Country("Burkina Faso", "BFA"),
+        Country("Burundi", "BDI"),
+        Country("Cabo Verde", "CPV"),
+        Country("Cambodia", "KHM"),
+        Country("Cameroon", "CMR"),
+        Country("Canada", "CAN"),
+        Country("Central African Republic", "CAF"),
+        Country("Chad", "TCD"),
+        Country("Chile", "CHL"),
+        Country("China", "CHN"),
+        Country("Colombia", "COL"),
+        Country("Comoros", "COM"),
+        Country("Congo", "COG"),
+        Country("Costa Rica", "CRI"),
+        Country("Croatia", "HRV"),
+        Country("Cuba", "CUB"),
+        Country("Cyprus", "CYP"),
+        Country("Czechia", "CZE"),
+        Country("Democratic Republic of the Congo", "COD"),
+        Country("Denmark", "DNK"),
+        Country("Djibouti", "DJI"),
+        Country("Dominica", "DMA"),
+        Country("Dominican Republic", "DOM"),
+        Country("Ecuador", "ECU"),
+        Country("Egypt", "EGY"),
+        Country("El Salvador", "SLV"),
+        Country("Equatorial Guinea", "GNQ"),
+        Country("Eritrea", "ERI"),
+        Country("Estonia", "EST"),
+        Country("Eswatini", "SWZ"),
+        Country("Ethiopia", "ETH"),
+        Country("Fiji", "FJI"),
+        Country("Finland", "FIN"),
+        Country("France", "FRA"),
+        Country("Gabon", "GAB"),
+        Country("Gambia", "GMB"),
+        Country("Georgia", "GEO"),
+        Country("Germany", "DEU"),
+        Country("Ghana", "GHA"),
+        Country("Greece", "GRC"),
+        Country("Grenada", "GRD"),
+        Country("Guatemala", "GTM"),
+        Country("Guinea", "GIN"),
+        Country("Guinea-Bissau", "GNB"),
+        Country("Guyana", "GUY"),
+        Country("Haiti", "HTI"),
+        Country("Honduras", "HND"),
+        Country("Hungary", "HUN"),
+        Country("Iceland", "ISL"),
+        Country("India", "IND"),
+        Country("Indonesia", "IDN"),
+        Country("Iran", "IRN"),
+        Country("Iraq", "IRQ"),
+        Country("Ireland", "IRL"),
+        Country("Israel", "ISR"),
+        Country("Italy", "ITA"),
+        Country("Jamaica", "JAM"),
+        Country("Japan", "JPN"),
+        Country("Jordan", "JOR"),
+        Country("Kazakhstan", "KAZ"),
+        Country("Kenya", "KEN"),
+        Country("Kiribati", "KIR"),
+        Country("Kuwait", "KWT"),
+        Country("Kyrgyzstan", "KGZ"),
+        Country("Laos", "LAO"),
+        Country("Latvia", "LVA"),
+        Country("Lebanon", "LBN"),
+        Country("Lesotho", "LSO"),
+        Country("Liberia", "LBR"),
+        Country("Libya", "LBY"),
+        Country("Liechtenstein", "LIE"),
+        Country("Lithuania", "LTU"),
+        Country("Luxembourg", "LUX"),
+        Country("Madagascar", "MDG"),
+        Country("Malawi", "MWI"),
+        Country("Malaysia", "MYS"),
+        Country("Maldives", "MDV"),
+        Country("Mali", "MLI"),
+        Country("Malta", "MLT"),
+        Country("Marshall Islands", "MHL"),
+        Country("Mauritania", "MRT"),
+        Country("Mauritius", "MUS"),
+        Country("Mexico", "MEX"),
+        Country("Micronesia", "FSM"),
+        Country("Moldova", "MDA"),
+        Country("Monaco", "MCO"),
+        Country("Mongolia", "MNG"),
+        Country("Montenegro", "MNE"),
+        Country("Morocco", "MAR"),
+        Country("Mozambique", "MOZ"),
+        Country("Myanmar", "MMR"),
+        Country("Namibia", "NAM"),
+        Country("Nauru", "NRU"),
+        Country("Nepal", "NPL"),
+        Country("Netherlands", "NLD"),
+        Country("New Zealand", "NZL"),
+        Country("Nicaragua", "NIC"),
+        Country("Niger", "NER"),
+        Country("Nigeria", "NGA"),
+        Country("North Korea", "PRK"),
+        Country("North Macedonia", "MKD"),
+        Country("Norway", "NOR"),
+        Country("Oman", "OMN"),
+        Country("Pakistan", "PAK"),
+        Country("Palau", "PLW"),
+        Country("Palestine", "PSE"),
+        Country("Panama", "PAN"),
+        Country("Papua New Guinea", "PNG"),
+        Country("Paraguay", "PRY"),
+        Country("Peru", "PER"),
+        Country("Philippines", "PHL"),
+        Country("Poland", "POL"),
+        Country("Portugal", "PRT"),
+        Country("Qatar", "QAT"),
+        Country("Romania", "ROU"),
+        Country("Russia", "RUS"),
+        Country("Rwanda", "RWA"),
+        Country("Saint Kitts and Nevis", "KNA"),
+        Country("Saint Lucia", "LCA"),
+        Country("Saint Vincent and the Grenadines", "VCT"),
+        Country("Samoa", "WSM"),
+        Country("San Marino", "SMR"),
+        Country("Sao Tome and Principe", "STP"),
+        Country("Saudi Arabia", "SAU"),
+        Country("Senegal", "SEN"),
+        Country("Serbia", "SRB"),
+        Country("Seychelles", "SYC"),
+        Country("Sierra Leone", "SLE"),
+        Country("Singapore", "SGP"),
+        Country("Slovakia", "SVK"),
+        Country("Slovenia", "SVN"),
+        Country("Solomon Islands", "SLB"),
+        Country("Somalia", "SOM"),
+        Country("South Africa", "ZAF"),
+        Country("South Korea", "KOR"),
+        Country("South Sudan", "SSD"),
+        Country("Spain", "ESP"),
+        Country("Sri Lanka", "LKA"),
+        Country("Sudan", "SDN"),
+        Country("Suriname", "SUR"),
+        Country("Sweden", "SWE"),
+        Country("Switzerland", "CHE"),
+        Country("Syria", "SYR"),
+        Country("Tajikistan", "TJK"),
+        Country("Tanzania", "TZA"),
+        Country("Thailand", "THA"),
+        Country("Timor-Leste", "TLS"),
+        Country("Togo", "TGO"),
+        Country("Tonga", "TON"),
+        Country("Trinidad and Tobago", "TTO"),
+        Country("Tunisia", "TUN"),
+        Country("Turkey", "TUR"),
+        Country("Turkmenistan", "TKM"),
+        Country("Tuvalu", "TUV"),
+        Country("Uganda", "UGA"),
+        Country("Ukraine", "UKR"),
+        Country("United Arab Emirates", "ARE"),
+        Country("United Kingdom", "GBR"),
+        Country("United States", "USA"),
+        Country("Uruguay", "URY"),
+        Country("Uzbekistan", "UZB"),
+        Country("Vanuatu", "VUT"),
+        Country("Vatican City", "VAT"),
+        Country("Venezuela", "VEN"),
+        Country("Vietnam", "VNM"),
+        Country("Yemen", "YEM"),
+        Country("Zambia", "ZMB"),
+        Country("Zimbabwe", "ZWE")
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        TextField(
+            value = query.value,
+            onValueChange = { query.value = it },
+            label = { Text("Search") },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { /* handle done action */ })
+        )
+
+        val filteredCountries = countries.filter { it.name.contains(query.value, true) }
+
+        filteredCountries.forEach { country ->
+            Text(country.name)
+        }
+    }
+}
+
+@Preview
+@Composable
+fun DefaultPreview() {
+    SearchBar()
+}
