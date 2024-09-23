@@ -1,10 +1,7 @@
 package com.example.searchbar
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -233,19 +230,10 @@ fun SearchBar(context: Context) {
         Country("Zimbabwe")
     )
 
-    fun showCountryInToast(countryName: String) {
-        val country = countries.find { it.name == countryName }
-        if (country != null) {
-            Toast.makeText(context, "Country: ${country.name}", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Country not found", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(20.dp)
     ) {
         TextField(
             value = query.value,
@@ -278,13 +266,7 @@ fun Clickable(onClick: () -> Unit, content: @Composable () -> Unit) {
     }
 }
 
-fun showToastFullScreenWidth(activity: Activity, message: String) {
-    val toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT)
-    toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0)
-    val layoutParams = toast.view?.layoutParams as? WindowManager.LayoutParams
-    layoutParams?.width = WindowManager.LayoutParams.MATCH_PARENT
-    toast.show()
-}
+
 
 
 
