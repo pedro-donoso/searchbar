@@ -197,5 +197,5 @@ val countries = listOf(
     Country("Vietnam", "VNM"),
     Country("Yemen", "YEM"),
     Country("Zambia", "ZMB"),
-    Country("Zimbabwe", "ZWE")
-)
+    Country("Zimbabwe", "ZW")
+    )

@@ -45,16 +45,14 @@ fun SearchBar() {
             keyboardActions = KeyboardActions(onDone = { /* handle done action */ })
         )
 
-        val filteredCountries = countries.filter { it.name.contains(query.value, true) }
+        if (query.value.isNotEmpty()) {
+            val filteredCountries = countries.filter { it.name.contains(query.value, true) }
 
-        filteredCountries.forEach { country ->
-            Text(country.name)
+            filteredCountries.forEach { country ->
+                Text(country.name)
+            }
         }
     }
 }
 
-@Preview
-@Composable
-fun DefaultPreview() {
-    SearchBar()
-}
+
